@@ -25,3 +25,5 @@ ctest-*.tar
 .idea/
 .DS_Store
 
+test/logs/*
+.elixir_ls
