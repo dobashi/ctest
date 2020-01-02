@@ -1,5 +1,5 @@
 defmodule CTest do
-  @host "http://localhost:4000"
+  @host "http://example"
   @path "/personal-assistant/api/"
   @header_csrf "X-CSRF-TOKEN"
 
