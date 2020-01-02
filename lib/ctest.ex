@@ -1,24 +1,47 @@
 defmodule CTest do
-  @host "http://example"
-  @path "/personal-assistant/api/"
-  @header_csrf "X-CSRF-TOKEN"
+  alias Algae.Either.Right
+  alias Algae.Either.Left
 
-  defmodule LoginParam do
-    defstruct [:company_code, :email, :password]
-  end
-  def login do
-    client = HttpClient.setup(@host <> @path)
-    param = %LoginParam{
-      company_code: "testcp_edia",
-      email: "ko.sato.exwzd+exa_admin_00@gmail.com",
-      password: "my77Strong#paSS"
-    }
+  use Witchcraft.Functor
+  use Witchcraft.Chain
+#  use Witchcraft.Foldable
 
-    HttpClient.post(client, "auth", param)
+  def main(args \\ []) do
+    ok(2)
+    |> flat_map(& twice_throwable(&1))
+    |> flat_map(& ng(&1))
+    |> IO.inspect
+
+    ok(2) |> flatten
+    |> IO.inspect
+
+    ng(3) |> flatten |> twice_throwable
+#    |> flat_map(& twice_throwable(&1))
+#    |> flat_map(& ng(&1))
+    |> IO.inspect
+
+
+      ok(2)
+      |> IO.inspect
+      |> map(& twice(&1))
+      |> IO.inspect
+      |> map(& twice(&1))
+      |> IO.inspect
+
+      ng(2)
+      |> IO.inspect
+      |> map(& twice(&1))
+      |> IO.inspect
+      |> map(& twice(&1))
+      |> IO.inspect
   end
 
-  def teams do
-    client = HttpClient.setup(@host <> @path)
-    HttpClient.get(client, "team")
-  end
+  defp flat_map(%Right{right: x}, f), do: f.(x)
+  defp flat_map(%Left{left: x}, f), do: x
+  defp twice_throwable(x), do: Right.new(x*2)
+  defp ok(x), do: Right.new(x)
+  defp ng(x), do: Left.new("error_message")
+  defp twice(x), do: x*2
 end
+
+

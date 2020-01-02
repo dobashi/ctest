@@ -26,3 +26,5 @@ ctest-*.tar
 *.iml
 .DS_Store
 
+test/logs/*
+.elixir_ls
