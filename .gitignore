@@ -23,6 +23,7 @@ erl_crash.dump
 ctest-*.tar
 
 .idea/
+*.iml
 .DS_Store
 
 test/logs/*
